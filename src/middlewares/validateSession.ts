@@ -19,7 +19,6 @@ export default function validateSession(
     return response.json({
       error: "Ops! Token não informado"
     });
-    
   }
 
   const [, token] = sessionHeaders.split(" ");
