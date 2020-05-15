@@ -7,6 +7,10 @@ interface IUser {
   password: string;
 }
 
+interface GetUSer {
+  email: string
+}
+
 class UsersRepository {
   public async createUser({
     name,
@@ -24,7 +28,7 @@ class UsersRepository {
     return newUser;
   }
 
-  public async getUser({ email }: IUser): Promise<any> {
+  public async getUser({ email }: GetUSer): Promise<any> {
     const user = await User.findOne({ email });
     return user;
   }

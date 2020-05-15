@@ -11,6 +11,7 @@ function validateSession(request, response, next) {
         response.json({
             error: "Ops! Token não informado"
         });
+        return;
     }
     var _a = sessionHeaders.split(" "), token = _a[1];
     try {

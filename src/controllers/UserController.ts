@@ -32,9 +32,9 @@ class UserController {
 
   async show(request: Request, response: Response): Promise<Response> {
     const { email } = request.body;
-
+    
     try {
-      const { _id, name } = await userRepository.getUser({ email });
+      const { _id, name } = await userRepository.getUser({email});
 
       return response.json({
         _id,
