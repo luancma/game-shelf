@@ -4,7 +4,7 @@ import validateSession from "../middlewares/validateSession";
 
 const igdbRouter = Router();
 
-// igdbRouter.use(validateSession);
+igdbRouter.use(validateSession);
 
 igdbRouter.get("/", GamerController.index);
 

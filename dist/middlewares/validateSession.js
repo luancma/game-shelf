@@ -8,10 +8,9 @@ var jsonwebtoken_1 = require("jsonwebtoken");
 function validateSession(request, response, next) {
     var sessionHeaders = request.headers.authorization;
     if (!sessionHeaders) {
-        response.json({
+        return response.json({
             error: "Ops! Token não informado"
         });
-        return;
     }
     var _a = sessionHeaders.split(" "), token = _a[1];
     try {

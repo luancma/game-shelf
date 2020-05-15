@@ -12,14 +12,14 @@ export default function validateSession(
   request: Request,
   response: Response,
   next: NextFunction
-): void {
+): Response<any>|void {
   const sessionHeaders = request.headers.authorization;
 
   if (!sessionHeaders) {
-    response.json({
+    return response.json({
       error: "Ops! Token não informado"
     });
-    return
+    
   }
 
   const [, token] = sessionHeaders.split(" ");
