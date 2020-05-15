@@ -15,6 +15,6 @@ mongoose.connect(
 app.use(express.json());
 app.use(routes);
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("App runing on port 8080");
 });
