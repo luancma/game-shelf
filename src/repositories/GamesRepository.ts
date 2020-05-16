@@ -1,4 +1,4 @@
-import api from "../api";
+import api from '../api';
 
 interface GameRequest {
   name: string;
@@ -16,7 +16,7 @@ class GamesRepository {
 
     return await api
       .post(
-        "/multiquery",
+        '/multiquery',
         `
       query games "List of ${name} games  " {
         fields
@@ -34,8 +34,8 @@ class GamesRepository {
       };
       `
       )
-      .then(values => values.data)
-      .catch(error => error.response.data);
+      .then((values) => values.data)
+      .catch((error) => error.response.data);
   }
 }
 
