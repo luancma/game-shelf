@@ -114,7 +114,9 @@ class ShelfController {
 
     await gameList.save();
 
-    response.json(gameList);
+    response.json({
+      message: 'Jogo removido com sucesso',
+    });
   }
 }
 export default new ShelfController();
