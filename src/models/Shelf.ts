@@ -1,12 +1,19 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { model } from 'mongoose';
 
+export interface ShelfInterface extends mongoose.Document {
+  _id: string;
+  games: any[];
+}
 
 const ShelfSchema = new mongoose.Schema({
-    _id: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    },
-    created_at: { type: Date, default: Date.now }
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  games: {
+    type: Array,
+  },
+  created_at: { type: Date, default: Date.now },
 });
 
-export default model("Shelf", ShelfSchema);
+export default model<ShelfInterface>('Shelf', ShelfSchema);
