@@ -1,54 +1,37 @@
 import { Request, Response } from 'express';
 import Shelf, { ShelfInterface } from '../models/Shelf';
+import ShelfRepository from '../repositories/ShelfRepository';
+import InsertGameToShelf from '../services/InsertGameToShelf';
+
+const shelfRepository = new ShelfRepository();
 
 class ShelfController {
-  async store(request: Request, response: Response): Promise<void> {
+  async store(request: Request, response: Response): Promise<Response> {
     const { game } = request.body;
 
-    const checkExistShelf = await Shelf.findOne({
-      _id: request.user.id,
-    });
+    const insetNewGame = new InsertGameToShelf(shelfRepository);
 
-    if (!checkExistShelf) {
-      const newShelf = await Shelf.create({
-        _id: request.user.id,
+    try {
+      const { name, id } = await insetNewGame.execute({
+        userId: request.user.id,
+        game,
       });
-
-      insertGame(newShelf);
-    }
-
-    function validateGame(id: number, shelf: ShelfInterface): any {
-      return shelf.games.find((game) => game.id === id);
-    }
-
-    async function insertGame(shelf = checkExistShelf) {
-      if (validateGame(game.id, shelf)) {
-        return response.json({
-          message: 'Jogo já está cadastrado',
-        });
-      }
-
-      await Shelf.updateOne(
-        {
-          _id: request.user.id,
-        },
-        {
-          $push: { games: game },
-        }
-      );
 
       return response.json({
-        status: 'Sucesso',
-        game_name: game.name,
+        message: 'Jogo adicionado com sucesso',
+        id,
+        name,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
       });
     }
-
-    insertGame();
   }
 
   async index(request: Request, response: Response): Promise<Response> {
-    const gameList = await Shelf.findOne({
-      _id: request.user.id,
+    const gameList = await shelfRepository.findShelf({
+      id: request.user.id,
     });
 
     return response.json(gameList.games);
@@ -57,11 +40,11 @@ class ShelfController {
   async delete(request: Request, response: Response): Promise<void> {
     const { id } = request.params;
 
-    const gameList = await Shelf.findOne({
-      _id: request.user.id,
+    const gameList = await shelfRepository.findShelf({
+      id: request.user.id,
     });
 
-    gameList.games = gameList.games.filter((game) => game.id != id);
+    gameList.games = gameList.games.filter((game: any) => game.id != id);
 
     await gameList.save();
 
