@@ -1,4 +1,4 @@
-import api from '../../../shared/api/index';
+import api from '../../../shared/infra/http/api';
 
 interface GameRequest {
   name: string;
@@ -29,7 +29,7 @@ class GamesRepository {
         involved_companies.company.name,
         cover.url, cover.height, cover.width;
         sort rating_count desc;
-        where rating_count != n & name = *"${name}"*;
+        where rating_count != n & name ~ *"${name}"*;
         limit ${pageSize()};
       };
       `
