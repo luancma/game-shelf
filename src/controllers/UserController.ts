@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import UsersRepository from '../repositories/UsersRepository';
-import CreateUserService from '../services/CreateUserService';
-import Shelf from '../models/Shelf';
+import UsersRepository from '../modules/users/repositories/UsersRepository';
+import CreateUserService from '../modules/users/services/CreateUserService';
+import Shelf from '../modules/shelves/entities/Shelf';
 
 const userRepository = new UsersRepository();
 

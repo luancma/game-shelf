@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import authConfig from "../config/auth";
+import authConfig from "../../config/auth";
 import { verify } from "jsonwebtoken";
 
 interface TokeyPayload {
@@ -35,7 +35,7 @@ export default function validateSession(
     return next();
   } catch (error) {
     response.json({
-      error: ` 🙄 Token inválido`
+      error: `Token inválido`
     });
   }
 }

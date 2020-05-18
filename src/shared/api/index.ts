@@ -1,5 +1,5 @@
 import Axios from "axios";
-import igdb from "../config/igdb";
+import igdb from "../../config/igdb";
 
 const api = Axios.create({
   baseURL: "https://api-v3.igdb.com",

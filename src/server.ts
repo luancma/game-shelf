@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import routes from "./routes/index";
+import routes from "./shared/routes/index"
 import cors from "cors";
 
 const app = express();

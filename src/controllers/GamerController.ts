@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import GamesRepository from "../repositories/GamesRepository";
+import GamesRepository from "../modules/games/repositories/GamesRepository";
 
 class GamerController {
   async index(request: Request, response: Response) {

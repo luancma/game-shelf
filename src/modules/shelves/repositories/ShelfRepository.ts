@@ -1,4 +1,4 @@
-import Shelf from '../models/Shelf';
+import Shelf from '../entities/Shelf';
 
 interface GameShelf {
   name: string;

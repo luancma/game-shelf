@@ -1,4 +1,3 @@
-import User from '../models/User';
 
 interface UserSign {
   email: string;

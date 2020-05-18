@@ -1,5 +1,5 @@
 import Router from "express";
-import GamerController from "../controllers/GamerController";
+import GamerController from "../../controllers/GamerController";
 import validateSession from "../middlewares/validateSession";
 
 const igdbRouter = Router();
