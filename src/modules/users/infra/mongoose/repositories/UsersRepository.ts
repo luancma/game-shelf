@@ -1,4 +1,4 @@
-import User from "../infra/entities/User";
+import User from "../entities/User";
 
 interface IUser {
   name: string;
@@ -12,12 +12,13 @@ interface GetUSer {
 }
 
 class UsersRepository {
+
   public async createUser({
     name,
     email,
     nickname,
     password
-  }: IUser): Promise<any> {
+  }: IUser): Promise<IUser> {
     const newUser = await User.create({
       name,
       nickname,
@@ -28,7 +29,7 @@ class UsersRepository {
     return newUser;
   }
 
-  public async getUser({ email }: GetUSer): Promise<any> {
+  public async getUser({ email }: IUser): Promise<any> {
     const user = await User.findOne({ email });
     return user;
   }

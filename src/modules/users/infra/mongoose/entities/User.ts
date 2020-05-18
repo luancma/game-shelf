@@ -1,4 +1,13 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { model , Document} from "mongoose";
+
+
+export interface IUserEtity extends Document {
+  name: string;
+  email: string;
+  nickname: string;
+  password: string;
+  created_at: Date;
+}
 
 const UserSchema = new mongoose.Schema({
   name: { required: true, type: String },
@@ -8,4 +17,4 @@ const UserSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now }
 });
 
-export default model("User", UserSchema);
+export default model<IUserEtity>("User", UserSchema);

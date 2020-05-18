@@ -1,4 +1,4 @@
-import UsersRepository from "../repositories/UsersRepository";
+import UsersRepository from "../infra/mongoose/repositories/UsersRepository";
 import { hash } from "bcryptjs";
 
 interface UserDTO {

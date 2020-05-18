@@ -1,6 +1,6 @@
 import { Router } from "express";
-import UserController from "../../../../controllers/UserController";
-import validateSession from "../middlewares/validateSession";
+import UserController from "@controllers/UserController";
+import validateSession from "@modules/sessions/infra/http/middlewares/validateSession";
 
 const userRouter = Router();
 

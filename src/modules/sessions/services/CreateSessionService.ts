@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import authConfig from "../../../config/auth";
-import UsersRepository from "../../users/repositories/UsersRepository";
+import authConfig from "@config/auth";
+import UsersRepository from "@modules/users/repositories/UsersRepository";
 
 interface UserSign {
   email: string;

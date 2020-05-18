@@ -1,8 +1,9 @@
 import { Router } from "express";
-import igdbRouter from "./igdb.router";
-import userRouter from "./user.router";
-import sessionRouter from "./session.router";
-import shelfRouter from './shelf.router';
+
+import igdbRouter from "@modules/games/infra/http/routes/igdb.router"
+import userRouter from "@modules/users/infra/http/routes/user.router";
+import sessionRouter from "@modules/sessions/infra/http/routes/session.router";
+import shelfRouter from '@modules/shelves/infra/http/routes/shelf.router';
 
 const routes = Router();
 

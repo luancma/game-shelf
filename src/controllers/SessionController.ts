@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import CreateSessionService from "../modules/sessions/services/CreateSessionService";
-import UsersRepository from "../modules/users/repositories/UsersRepository";
+import CreateSessionService from "@modules/sessions/services/CreateSessionService";
+import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
 
 const userRepository = new UsersRepository();
 

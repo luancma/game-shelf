@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import ShelfRepository from '../modules/shelves/repositories/ShelfRepository';
-import InsertGameToShelf from '../modules/shelves/services/InsertGameToShelf';
+import ShelfRepository from '@modules/shelves/repositories/ShelfRepository';
+import InsertGameToShelf from '@modules/shelves/services/InsertGameToShelf';
 
 const shelfRepository = new ShelfRepository();
 

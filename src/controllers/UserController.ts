@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import UsersRepository from '../modules/users/repositories/UsersRepository';
-import CreateUserService from '../modules/users/services/CreateUserService';
-import Shelf from '../modules/shelves/infra/entities/Shelf';
+import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import Shelf from '@modules/shelves/infra/entities/Shelf';
 
 const userRepository = new UsersRepository();
 

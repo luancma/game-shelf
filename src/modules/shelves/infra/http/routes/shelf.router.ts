@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import validateSession from '../middlewares/validateSession';
-import ShelfController from '../../../../controllers/ShelfController';
+import validateSession from "@modules/sessions/infra/http/middlewares/validateSession";
+
+import ShelfController from '@controllers/ShelfController';
 
 const shelfRouter = Router();
 

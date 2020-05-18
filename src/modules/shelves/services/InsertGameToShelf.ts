@@ -1,5 +1,5 @@
 import ShelfRepository from '../repositories/ShelfRepository'
-import { ShelfInterface } from '../entities/Shelf';
+import { ShelfInterface } from '../infra/entities/Shelf';
 
 interface GameI {
   id: number;

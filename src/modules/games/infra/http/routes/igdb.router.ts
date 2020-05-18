@@ -1,6 +1,7 @@
 import Router from "express";
-import GamerController from "../../../../controllers/GamerController";
-import validateSession from "../middlewares/validateSession";
+import GamerController from "@controllers/GamerController";
+import validateSession from "@modules/sessions/infra/http/middlewares/validateSession";
+
 
 const igdbRouter = Router();
 

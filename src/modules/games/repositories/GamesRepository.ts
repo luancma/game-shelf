@@ -1,4 +1,4 @@
-import api from '../../../shared/infra/http/api';
+import api from '@shared/infra/http/api';
 
 interface GameRequest {
   name: string;
