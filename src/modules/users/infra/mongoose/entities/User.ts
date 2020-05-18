@@ -1,7 +1,6 @@
-import mongoose, { model , Document} from "mongoose";
+import mongoose, { model, Document } from 'mongoose';
 
-
-export interface IUserEtity extends Document {
+export interface IUserEntity extends Document {
   name: string;
   email: string;
   nickname: string;
@@ -14,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   email: { required: true, type: String, unique: true },
   nickname: { required: true, type: String, unique: true },
   password: { required: true, type: String },
-  created_at: { type: Date, default: Date.now }
+  created_at: { type: Date, default: Date.now },
 });
 
-export default model<IUserEtity>("User", UserSchema);
+export default model<IUserEntity>('User', UserSchema);

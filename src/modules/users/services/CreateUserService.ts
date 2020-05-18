@@ -1,17 +1,15 @@
-import UsersRepository from "../infra/mongoose/repositories/UsersRepository";
-import { hash } from "bcryptjs";
+import IUsersRepository from '../repositories/IUsersRepository';
+import {
+  requestCreateUserDTO,
+  responseCreateUserDTO,
+} from '../interfaces/UserDTO';
 
-interface UserDTO {
-  name: string;
-  nickname: string;
-  password: string;
-  email: string;
-}
+import { hash } from 'bcryptjs';
 
 export default class CreateUserService {
-  private usersRepository: UsersRepository;
+  private usersRepository: IUsersRepository;
 
-  constructor(usersRepository: UsersRepository) {
+  constructor(usersRepository: IUsersRepository) {
     this.usersRepository = usersRepository;
   }
 
@@ -19,12 +17,12 @@ export default class CreateUserService {
     email,
     name,
     nickname,
-    password
-  }: UserDTO): Promise<any> {
+    password,
+  }: requestCreateUserDTO): Promise<responseCreateUserDTO> {
     const checkUserExists = await this.usersRepository.getUser({ email });
 
     if (checkUserExists) {
-      throw new Error("Email informado já está em uso");
+      throw new Error('Email informado já está em uso');
     }
 
     const hashedPassword = await hash(password, 8);
@@ -33,7 +31,7 @@ export default class CreateUserService {
       name,
       email,
       nickname,
-      password: hashedPassword
+      password: hashedPassword,
     });
 
     return user;
