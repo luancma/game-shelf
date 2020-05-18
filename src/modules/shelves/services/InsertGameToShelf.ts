@@ -1,4 +1,4 @@
-import ShelfRepository from '../repositories/ShelfRepository'
+import ShelfRepository from '../repositories/ShelfRepository';
 import { ShelfInterface } from '../infra/entities/Shelf';
 
 interface GameI {

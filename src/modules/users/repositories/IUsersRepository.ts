@@ -16,4 +16,6 @@ export default interface IUsersRepository {
   }: Pick<requestCreateUserDTO, 'email'>): Promise<
     responseCreateUserDTO | undefined
   >;
+
+  listUsers(): Promise<responseCreateUserDTO[] | undefined>;
 }

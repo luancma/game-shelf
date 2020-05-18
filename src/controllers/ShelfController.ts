@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ShelfRepository from '@modules/shelves/repositories/ShelfRepository';
+import ShelfRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
 import InsertGameToShelf from '@modules/shelves/services/InsertGameToShelf';
 
 const shelfRepository = new ShelfRepository();
@@ -30,7 +30,7 @@ class ShelfController {
 
   async index(request: Request, response: Response): Promise<Response> {
     const gameList = await shelfRepository.findShelf({
-      id: request.user.id,
+      _id: request.user.id,
     });
 
     return response.json(gameList.games);
@@ -40,7 +40,7 @@ class ShelfController {
     const { id } = request.params;
 
     const gameList = await shelfRepository.findShelf({
-      id: request.user.id,
+      _id: request.user.id,
     });
 
     gameList.games = gameList.games.filter((game: any) => game.id != id);

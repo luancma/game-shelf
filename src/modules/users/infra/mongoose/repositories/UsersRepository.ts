@@ -28,5 +28,11 @@ class UsersRepository implements IUsersRepository {
     const user = await User.findOne({ email });
     return user;
   }
+
+  public async listUsers(): Promise<responseCreateUserDTO[]> {
+    const users = await User.find(null, 'name nickname email friends');
+
+    return users;
+  }
 }
 export default UsersRepository;
