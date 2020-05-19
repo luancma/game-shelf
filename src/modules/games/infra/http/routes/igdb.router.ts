@@ -7,6 +7,6 @@ const igdbRouter = Router();
 
 igdbRouter.use(validateSession);
 
-igdbRouter.get("/", GamerController.index);
+igdbRouter.post("/", GamerController.index);
 
 export default igdbRouter;
