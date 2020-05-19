@@ -21,10 +21,11 @@
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.12",
     "prettier": "^2.0.5",
+    "reflect-metadata": "^0.1.13",
     "ts-node-dev": "1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "tsyringe": "^4.3.0",
-    "typescript": "3.8.3",
-    "tsconfig-paths": "^3.9.0"
+    "typescript": "3.8.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

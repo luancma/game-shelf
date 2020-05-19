@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
 import CreateUserService from '@modules/users/services/CreateUserService';
-import ShelvesRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
+import ShelvesRepository from '@modules/shelves/infra/mongoose/repositories/ShelvesRepository';
 import { responseCreateUserDTO } from '@modules/users/interfaces/UserDTO';
 
 const userRepository = new UsersRepository();
@@ -12,7 +13,7 @@ class UserController {
     const { name, password, nickname, email } = request.body;
 
     try {
-      const createUserService = new CreateUserService(userRepository);
+      const createUserService = container.resolve(CreateUserService);
 
       const { _id } = await createUserService.execute({
         name,

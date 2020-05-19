@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ShelfRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
+import ShelfRepository from '@modules/shelves/infra/mongoose/repositories/ShelvesRepository';
 import InsertGameToShelf from '@modules/shelves/services/InsertGameToShelf';
 
 const shelfRepository = new ShelfRepository();
