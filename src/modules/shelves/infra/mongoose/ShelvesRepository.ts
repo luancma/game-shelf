@@ -5,9 +5,12 @@ import {
   IUpdateGameShelfDTO,
   IRemoveGameDTO,
 } from '@modules/shelves/interfaces/ShelfDTO';
-import { response } from 'express';
 
 class ShelfRepository implements IShelvesRepository {
+  public async createShelf({ _id }: Pick<ICreateShelf, '_id'>): Promise<void> {
+    await Shelf.create({ _id });
+  }
+
   public async findShelf({
     _id,
   }: Pick<ICreateShelf, '_id'>): Promise<ICreateShelf> {

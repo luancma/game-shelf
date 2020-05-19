@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
 import CreateUserService from '@modules/users/services/CreateUserService';
-import Shelf from '@modules/shelves/infra/entities/Shelf';
+import ShelvesRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
 import { responseCreateUserDTO } from '@modules/users/interfaces/UserDTO';
 
 const userRepository = new UsersRepository();
+const shelfRepository = new ShelvesRepository();
 
 class UserController {
   async store(request: Request, response: Response): Promise<Response> {
@@ -20,7 +21,7 @@ class UserController {
         password,
       });
 
-      await Shelf.create({
+      await shelfRepository.createShelf({
         _id,
       });
 
