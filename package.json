@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
-    "start": "node dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/shared/infra/http/server.js",
     "build": "tsc"
   },
   "dependencies": {
@@ -22,7 +22,8 @@
     "mongoose": "5.9.12",
     "prettier": "^2.0.5",
     "ts-node-dev": "1.0.0-pre.44",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "tsconfig-paths": "^3.9.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -30,7 +31,8 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "nodemon": "1.18.4"
+    "nodemon": "1.18.4",
+    "tsconfig-paths": "^3.9.0"
   },
   "keywords": [],
   "engines": {

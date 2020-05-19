@@ -39,8 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var CreateSessionService_1 = __importDefault(require("../services/CreateSessionService"));
-var UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+var CreateSessionService_1 = __importDefault(require("@modules/sessions/services/CreateSessionService"));
+var UsersRepository_1 = __importDefault(require("@modules/users/infra/mongoose/repositories/UsersRepository"));
 var userRepository = new UsersRepository_1.default();
 var SessionController = /** @class */ (function () {
     function SessionController() {

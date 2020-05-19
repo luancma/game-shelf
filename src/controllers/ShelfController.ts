@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import Shelf, { ShelfInterface } from '../models/Shelf';
-import ShelfRepository from '../repositories/ShelfRepository';
-import InsertGameToShelf from '../services/InsertGameToShelf';
+import ShelfRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
+import InsertGameToShelf from '@modules/shelves/services/InsertGameToShelf';
 
 const shelfRepository = new ShelfRepository();
 
@@ -13,7 +12,7 @@ class ShelfController {
 
     try {
       const { name, id } = await insetNewGame.execute({
-        userId: request.user.id,
+        _id: request.user.id,
         game,
       });
 
@@ -31,26 +30,26 @@ class ShelfController {
 
   async index(request: Request, response: Response): Promise<Response> {
     const gameList = await shelfRepository.findShelf({
-      id: request.user.id,
+      _id: request.user.id,
     });
 
     return response.json(gameList.games);
   }
 
-  async delete(request: Request, response: Response): Promise<void> {
+  async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const gameList = await shelfRepository.findShelf({
-      id: request.user.id,
-    });
+    try {
+      await shelfRepository.delete({ id, _id: request.user.id });
 
-    gameList.games = gameList.games.filter((game: any) => game.id != id);
-
-    await gameList.save();
-
-    response.json({
-      message: 'Jogo removido com sucesso',
-    });
+      response.json({
+        message: 'Jogo removido com sucesso',
+      });
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
+      });
+    }
   }
 }
 export default new ShelfController();
