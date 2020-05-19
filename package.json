@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "start": "yarn tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/shared/infra/http/server.js",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/shared/infra/http/server.js",
     "build": "tsc"
   },
   "dependencies": {
