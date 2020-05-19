@@ -45,16 +45,26 @@ var GamerController = /** @class */ (function () {
     }
     GamerController.prototype.index = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name, _b, page, gamesRepository, gameList;
+            var _a, name, _b, page, gamesRepository, gameList, error_1;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _a = request.body, name = _a.name, _b = _a.page, page = _b === void 0 ? 1 : _b;
                         gamesRepository = new GamesRepository_1.default();
-                        return [4 /*yield*/, gamesRepository.list({ name: name, page: page })];
+                        _c.label = 1;
                     case 1:
+                        _c.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, gamesRepository.list({ name: name, page: page })];
+                    case 2:
                         gameList = _c.sent();
-                        return [2 /*return*/, response.json(gameList)];
+                        response.json({ games: gameList[0].result });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _c.sent();
+                        return [2 /*return*/, response.status(400).json({
+                                error: error_1.message,
+                            })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

@@ -39,10 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var tsyringe_1 = require("tsyringe");
 var UsersRepository_1 = __importDefault(require("@modules/users/infra/mongoose/repositories/UsersRepository"));
 var CreateUserService_1 = __importDefault(require("@modules/users/services/CreateUserService"));
-var Shelf_1 = __importDefault(require("@modules/shelves/infra/entities/Shelf"));
+var ShelvesRepository_1 = __importDefault(require("@modules/shelves/infra/mongoose/repositories/ShelvesRepository"));
 var userRepository = new UsersRepository_1.default();
+var shelfRepository = new ShelvesRepository_1.default();
 var UserController = /** @class */ (function () {
     function UserController() {
     }
@@ -56,7 +58,7 @@ var UserController = /** @class */ (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
-                        createUserService = new CreateUserService_1.default(userRepository);
+                        createUserService = tsyringe_1.container.resolve(CreateUserService_1.default);
                         return [4 /*yield*/, createUserService.execute({
                                 name: name,
                                 nickname: nickname,
@@ -65,7 +67,7 @@ var UserController = /** @class */ (function () {
                             })];
                     case 2:
                         _id = (_b.sent())._id;
-                        return [4 /*yield*/, Shelf_1.default.create({
+                        return [4 /*yield*/, shelfRepository.createShelf({
                                 _id: _id,
                             })];
                     case 3:

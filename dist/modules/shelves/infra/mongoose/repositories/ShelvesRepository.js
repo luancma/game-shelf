@@ -1,16 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -47,49 +35,85 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var tsyringe_1 = require("tsyringe");
-var UpdateGameShelf = /** @class */ (function () {
-    function UpdateGameShelf(shelfRepository) {
-        this.shelfRepository = shelfRepository;
+var Shelf_1 = __importDefault(require("@modules/shelves/infra/mongoose/entities/Shelf"));
+var ShelfRepository = /** @class */ (function () {
+    function ShelfRepository() {
     }
-    UpdateGameShelf.prototype.execute = function (_a) {
-        var _id = _a._id, game = _a.game;
+    ShelfRepository.prototype.createShelf = function (_a) {
+        var _id = _a._id;
         return __awaiter(this, void 0, void 0, function () {
-            var checkExistShelf, validateGame;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.shelfRepository.findShelf({
+                    case 0: return [4 /*yield*/, Shelf_1.default.create({ _id: _id })];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ShelfRepository.prototype.findShelf = function (_a) {
+        var _id = _a._id;
+        return __awaiter(this, void 0, void 0, function () {
+            var shelf;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.findOne({
                             _id: _id,
                         })];
                     case 1:
-                        checkExistShelf = _b.sent();
-                        validateGame = function (id, shelf) {
-                            return shelf.games.find(function (game) { return game.id === id; });
-                        };
-                        if (validateGame(game.id, checkExistShelf)) {
-                            throw new Error('Jogo já está cadastrado');
-                        }
-                        return [4 /*yield*/, this.shelfRepository.updateShelf({
-                                _id: _id,
-                                game: game,
-                            })];
-                    case 2:
+                        shelf = _b.sent();
+                        return [2 /*return*/, shelf];
+                }
+            });
+        });
+    };
+    ShelfRepository.prototype.updateShelf = function (_a) {
+        var _id = _a._id, game = _a.game;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.updateOne({
+                            _id: _id,
+                        }, {
+                            $push: { games: game },
+                        })];
+                    case 1:
                         _b.sent();
                         return [2 /*return*/, {
-                                status: 'Sucesso',
-                                id: game.id,
+                                _id: _id,
                                 name: game.name,
                             }];
                 }
             });
         });
     };
-    UpdateGameShelf = __decorate([
-        tsyringe_1.injectable(),
-        __param(0, tsyringe_1.inject('ShelfRepository')),
-        __metadata("design:paramtypes", [Object])
-    ], UpdateGameShelf);
-    return UpdateGameShelf;
+    ShelfRepository.prototype.delete = function (_a) {
+        var id = _a.id, _id = _a._id;
+        return __awaiter(this, void 0, void 0, function () {
+            var shelf;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.findOne({
+                            _id: _id,
+                        })];
+                    case 1:
+                        shelf = _b.sent();
+                        shelf.games = shelf.games.filter(function (game) { return game.id != id; });
+                        return [4 /*yield*/, shelf.save()];
+                    case 2:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                message: 'Deletado',
+                            }];
+                }
+            });
+        });
+    };
+    return ShelfRepository;
 }());
-exports.default = UpdateGameShelf;
+exports.default = ShelfRepository;
