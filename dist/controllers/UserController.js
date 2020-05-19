@@ -39,8 +39,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
-var CreateUserService_1 = __importDefault(require("../services/CreateUserService"));
+var UsersRepository_1 = __importDefault(require("@modules/users/infra/mongoose/repositories/UsersRepository"));
+var CreateUserService_1 = __importDefault(require("@modules/users/services/CreateUserService"));
+var Shelf_1 = __importDefault(require("@modules/shelves/infra/entities/Shelf"));
 var userRepository = new UsersRepository_1.default();
 var UserController = /** @class */ (function () {
     function UserController() {
@@ -54,27 +55,32 @@ var UserController = /** @class */ (function () {
                         _a = request.body, name = _a.name, password = _a.password, nickname = _a.nickname, email = _a.email;
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
+                        _b.trys.push([1, 4, , 5]);
                         createUserService = new CreateUserService_1.default(userRepository);
                         return [4 /*yield*/, createUserService.execute({
                                 name: name,
                                 nickname: nickname,
                                 email: email,
-                                password: password
+                                password: password,
                             })];
                     case 2:
                         _id = (_b.sent())._id;
+                        return [4 /*yield*/, Shelf_1.default.create({
+                                _id: _id,
+                            })];
+                    case 3:
+                        _b.sent();
                         return [2 /*return*/, response.json({
                                 _id: _id,
                                 name: name,
-                                email: email
+                                email: email,
                             })];
-                    case 3:
+                    case 4:
                         error_1 = _b.sent();
                         return [2 /*return*/, response.status(400).json({
-                                error: error_1.message
+                                error: error_1.message,
                             })];
-                    case 4: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -95,14 +101,35 @@ var UserController = /** @class */ (function () {
                         return [2 /*return*/, response.json({
                                 _id: _id,
                                 name: name_1,
-                                email: email
+                                email: email,
                             })];
                     case 3:
                         error_2 = _b.sent();
                         return [2 /*return*/, response.status(400).json({
-                                error: error_2.message
+                                error: error_2.message,
                             })];
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.index = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var users, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, userRepository.listUsers()];
+                    case 1:
+                        users = _a.sent();
+                        return [2 /*return*/, response.json(users)];
+                    case 2:
+                        error_3 = _a.sent();
+                        return [2 /*return*/, response.status(400).json({
+                                error: error_3.message,
+                            })];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -12,7 +12,7 @@ class ShelfController {
 
     try {
       const { name, id } = await insetNewGame.execute({
-        userId: request.user.id,
+        _id: request.user.id,
         game,
       });
 
@@ -36,20 +36,20 @@ class ShelfController {
     return response.json(gameList.games);
   }
 
-  async delete(request: Request, response: Response): Promise<void> {
+  async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const gameList = await shelfRepository.findShelf({
-      _id: request.user.id,
-    });
+    try {
+      await shelfRepository.delete({ id, _id: request.user.id });
 
-    gameList.games = gameList.games.filter((game: any) => game.id != id);
-
-    await gameList.save();
-
-    response.json({
-      message: 'Jogo removido com sucesso',
-    });
+      response.json({
+        message: 'Jogo removido com sucesso',
+      });
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
+      });
+    }
   }
 }
 export default new ShelfController();

@@ -39,40 +39,68 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var CreateSessionService_1 = __importDefault(require("@modules/sessions/services/CreateSessionService"));
-var UsersRepository_1 = __importDefault(require("@modules/users/infra/mongoose/repositories/UsersRepository"));
-var userRepository = new UsersRepository_1.default();
-var SessionController = /** @class */ (function () {
-    function SessionController() {
+var Shelf_1 = __importDefault(require("@modules/shelves/infra/entities/Shelf"));
+var ShelfRepository = /** @class */ (function () {
+    function ShelfRepository() {
     }
-    SessionController.prototype.store = function (request, response) {
+    ShelfRepository.prototype.findShelf = function (_a) {
+        var _id = _a._id;
         return __awaiter(this, void 0, void 0, function () {
-            var _a, email, password, sessionService, _b, user, token, _id, name_1, error_1;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _a = request.body, email = _a.email, password = _a.password;
-                        _c.label = 1;
+            var shelf;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.findOne({
+                            _id: _id,
+                        })];
                     case 1:
-                        _c.trys.push([1, 3, , 4]);
-                        sessionService = new CreateSessionService_1.default(userRepository);
-                        return [4 /*yield*/, sessionService.execute({
-                                email: email,
-                                password: password
-                            })];
-                    case 2:
-                        _b = _c.sent(), user = _b.user, token = _b.token;
-                        _id = user._id, name_1 = user.name;
-                        response.json({ _id: _id, name: name_1, email: email, token: token });
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _c.sent();
-                        return [2 /*return*/, response.status(400).json({ error: error_1.message })];
-                    case 4: return [2 /*return*/];
+                        shelf = _b.sent();
+                        return [2 /*return*/, shelf];
                 }
             });
         });
     };
-    return SessionController;
+    ShelfRepository.prototype.updateShelf = function (_a) {
+        var _id = _a._id, game = _a.game;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.updateOne({
+                            _id: _id,
+                        }, {
+                            $push: { games: game },
+                        })];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                _id: _id,
+                                name: game.name,
+                            }];
+                }
+            });
+        });
+    };
+    ShelfRepository.prototype.delete = function (_a) {
+        var id = _a.id, _id = _a._id;
+        return __awaiter(this, void 0, void 0, function () {
+            var shelf;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Shelf_1.default.findOne({
+                            _id: _id,
+                        })];
+                    case 1:
+                        shelf = _b.sent();
+                        shelf.games = shelf.games.filter(function (game) { return game.id != id; });
+                        return [4 /*yield*/, shelf.save()];
+                    case 2:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                message: 'Deletado',
+                            }];
+                }
+            });
+        });
+    };
+    return ShelfRepository;
 }());
-exports.default = new SessionController();
+exports.default = ShelfRepository;

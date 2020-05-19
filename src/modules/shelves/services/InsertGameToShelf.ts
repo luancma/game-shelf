@@ -1,15 +1,8 @@
-import ShelfRepository from '../repositories/ShelfRepository';
-import { ShelfInterface } from '../infra/entities/Shelf';
-
-interface GameI {
-  id: number;
-  name: string;
-}
-
-interface ShefI {
-  userId: string;
-  game: GameI;
-}
+import ShelfRepository from '@modules/shelves/repositories/IShelvesRepository';
+import {
+  ICreateShelf,
+  IUpdateGameShelfDTO,
+} from '@modules/shelves/interfaces/ShelfDTO';
 
 class UpdateGameShelf {
   private shelfRepository: ShelfRepository;
@@ -18,12 +11,12 @@ class UpdateGameShelf {
     this.shelfRepository = shelfRepository;
   }
 
-  public async execute({ userId, game }: ShefI): Promise<any> {
+  public async execute({ _id, game }: IUpdateGameShelfDTO): Promise<any> {
     const checkExistShelf = await this.shelfRepository.findShelf({
-      id: userId,
+      _id: _id,
     });
 
-    const validateGame = (id: number, shelf: ShelfInterface): any =>
+    const validateGame = (id: number, shelf: ICreateShelf): any =>
       shelf.games.find((game) => game.id === id);
 
     if (validateGame(game.id, checkExistShelf)) {
@@ -31,7 +24,7 @@ class UpdateGameShelf {
     }
 
     await this.shelfRepository.updateShelf({
-      id: userId,
+      _id: _id,
       game,
     });
 

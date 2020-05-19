@@ -1,4 +1,8 @@
-import { ICreateShelf, IUpdateGameShelfDTO } from '../interfaces/ShelfDTO';
+import {
+  ICreateShelf,
+  IUpdateGameShelfDTO,
+  IRemoveGameDTO,
+} from '../interfaces/ShelfDTO';
 
 export default interface IShelvesRepository {
   findShelf({
@@ -6,4 +10,6 @@ export default interface IShelvesRepository {
   }: Pick<ICreateShelf, '_id'>): Promise<ICreateShelf> | undefined;
 
   updateShelf({ _id, game }: IUpdateGameShelfDTO): Promise<any> | undefined;
+
+  delete({ id, _id }: IRemoveGameDTO): Promise<any> | undefined;
 }

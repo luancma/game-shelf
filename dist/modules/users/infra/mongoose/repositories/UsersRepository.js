@@ -39,40 +39,56 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var CreateSessionService_1 = __importDefault(require("@modules/sessions/services/CreateSessionService"));
-var UsersRepository_1 = __importDefault(require("@modules/users/infra/mongoose/repositories/UsersRepository"));
-var userRepository = new UsersRepository_1.default();
-var SessionController = /** @class */ (function () {
-    function SessionController() {
+var User_1 = __importDefault(require("../entities/User"));
+var UsersRepository = /** @class */ (function () {
+    function UsersRepository() {
     }
-    SessionController.prototype.store = function (request, response) {
+    UsersRepository.prototype.createUser = function (_a) {
+        var name = _a.name, email = _a.email, nickname = _a.nickname, password = _a.password;
         return __awaiter(this, void 0, void 0, function () {
-            var _a, email, password, sessionService, _b, user, token, _id, name_1, error_1;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _a = request.body, email = _a.email, password = _a.password;
-                        _c.label = 1;
+            var newUser;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.create({
+                            name: name,
+                            nickname: nickname,
+                            email: email,
+                            password: password,
+                        })];
                     case 1:
-                        _c.trys.push([1, 3, , 4]);
-                        sessionService = new CreateSessionService_1.default(userRepository);
-                        return [4 /*yield*/, sessionService.execute({
-                                email: email,
-                                password: password
-                            })];
-                    case 2:
-                        _b = _c.sent(), user = _b.user, token = _b.token;
-                        _id = user._id, name_1 = user.name;
-                        response.json({ _id: _id, name: name_1, email: email, token: token });
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _c.sent();
-                        return [2 /*return*/, response.status(400).json({ error: error_1.message })];
-                    case 4: return [2 /*return*/];
+                        newUser = _b.sent();
+                        return [2 /*return*/, newUser];
                 }
             });
         });
     };
-    return SessionController;
+    UsersRepository.prototype.getUser = function (_a) {
+        var email = _a.email;
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findOne({ email: email })];
+                    case 1:
+                        user = _b.sent();
+                        return [2 /*return*/, user];
+                }
+            });
+        });
+    };
+    UsersRepository.prototype.listUsers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var users;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, User_1.default.find(null, 'name nickname email friends')];
+                    case 1:
+                        users = _a.sent();
+                        return [2 /*return*/, users];
+                }
+            });
+        });
+    };
+    return UsersRepository;
 }());
-exports.default = new SessionController();
+exports.default = UsersRepository;

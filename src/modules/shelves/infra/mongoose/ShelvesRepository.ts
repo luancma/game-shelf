@@ -1,9 +1,16 @@
 import Shelf from '@modules/shelves/infra/entities/Shelf';
 import IShelvesRepository from '@modules/shelves/repositories/IShelvesRepository';
-import { IShelf } from '@modules/shelves/interfaces/ICreateShelve';
+import {
+  ICreateShelf,
+  IUpdateGameShelfDTO,
+  IRemoveGameDTO,
+} from '@modules/shelves/interfaces/ShelfDTO';
+import { response } from 'express';
 
 class ShelfRepository implements IShelvesRepository {
-  public async findShelf({ _id }: Pick<IShelf, '_id'>): Promise<IShelf> {
+  public async findShelf({
+    _id,
+  }: Pick<ICreateShelf, '_id'>): Promise<ICreateShelf> {
     const shelf = await Shelf.findOne({
       _id,
     });
@@ -11,7 +18,7 @@ class ShelfRepository implements IShelvesRepository {
     return shelf;
   }
 
-  public async updateShelf({ _id, game }: IShelf) {
+  public async updateShelf({ _id, game }: IUpdateGameShelfDTO) {
     await Shelf.updateOne(
       {
         _id,
@@ -24,6 +31,20 @@ class ShelfRepository implements IShelvesRepository {
     return {
       _id,
       name: game.name,
+    };
+  }
+
+  public async delete({ id, _id }: IRemoveGameDTO) {
+    const shelf = await Shelf.findOne({
+      _id,
+    });
+
+    shelf.games = shelf.games.filter((game: any) => game.id != id);
+
+    await shelf.save();
+
+    return {
+      message: 'Deletado',
     };
   }
 }

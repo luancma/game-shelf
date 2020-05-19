@@ -1,14 +1,14 @@
-import { compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
-import authConfig from "@config/auth";
-import UsersRepository from "@modules/users/repositories/UsersRepository";
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import authConfig from '@config/auth';
+import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
 
 interface UserSign {
   email: string;
   password: string;
 }
 
-interface User{
+interface User {
   _id: string;
   name: string;
   email: string;
@@ -30,19 +30,19 @@ class CreateSessionService {
     const user = await this.usersRepository.getUser({ email });
 
     if (!user) {
-      throw new Error("Email ou senha inválidos");
+      throw new Error('Email ou senha inválidos');
     }
 
     const validatePassword = compare(password, user.password);
 
     if (!validatePassword) {
-      throw new Error("Email ou senha inválidos");
+      throw new Error('Email ou senha inválidos');
     }
 
     const { secret, expiresIn } = authConfig.jwt;
     const token = sign({}, secret, {
       subject: `${user._id}`,
-      expiresIn: expiresIn
+      expiresIn: expiresIn,
     });
 
     return { user, token };
