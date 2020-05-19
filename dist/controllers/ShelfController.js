@@ -39,62 +39,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Shelf_1 = __importDefault(require("../models/Shelf"));
+var ShelvesRepository_1 = __importDefault(require("@modules/shelves/infra/mongoose/ShelvesRepository"));
+var InsertGameToShelf_1 = __importDefault(require("@modules/shelves/services/InsertGameToShelf"));
+var shelfRepository = new ShelvesRepository_1.default();
 var ShelfController = /** @class */ (function () {
     function ShelfController() {
     }
     ShelfController.prototype.store = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            function validateGame(id, shelf) {
-                return shelf.games.find(function (game) { return game.id === id; });
-            }
-            function insertGame(shelf) {
-                if (shelf === void 0) { shelf = checkExistShelf; }
-                return __awaiter(this, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0:
-                                if (validateGame(game.id, shelf)) {
-                                    return [2 /*return*/, response.json({
-                                            message: 'Jogo já está cadastrado',
-                                        })];
-                                }
-                                return [4 /*yield*/, Shelf_1.default.updateOne({
-                                        _id: request.user.id,
-                                    }, {
-                                        $push: { games: game },
-                                    })];
-                            case 1:
-                                _a.sent();
-                                return [2 /*return*/, response.json({
-                                        status: 'Sucesso',
-                                        game_name: game.name,
-                                    })];
-                        }
-                    });
-                });
-            }
-            var game, checkExistShelf, newShelf;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var game, insetNewGame, _a, name_1, id, error_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         game = request.body.game;
-                        return [4 /*yield*/, Shelf_1.default.findOne({
-                                _id: request.user.id,
-                            })];
+                        insetNewGame = new InsertGameToShelf_1.default(shelfRepository);
+                        _b.label = 1;
                     case 1:
-                        checkExistShelf = _a.sent();
-                        if (!!checkExistShelf) return [3 /*break*/, 3];
-                        return [4 /*yield*/, Shelf_1.default.create({
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, insetNewGame.execute({
                                 _id: request.user.id,
+                                game: game,
                             })];
                     case 2:
-                        newShelf = _a.sent();
-                        insertGame(newShelf);
-                        _a.label = 3;
+                        _a = _b.sent(), name_1 = _a.name, id = _a.id;
+                        return [2 /*return*/, response.json({
+                                message: 'Jogo adicionado com sucesso',
+                                id: id,
+                                name: name_1,
+                            })];
                     case 3:
-                        insertGame();
-                        return [2 /*return*/];
+                        error_1 = _b.sent();
+                        return [2 /*return*/, response.status(400).json({
+                                error: error_1.message,
+                            })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -104,7 +82,7 @@ var ShelfController = /** @class */ (function () {
             var gameList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Shelf_1.default.findOne({
+                    case 0: return [4 /*yield*/, shelfRepository.findShelf({
                             _id: request.user.id,
                         })];
                     case 1:
@@ -116,24 +94,27 @@ var ShelfController = /** @class */ (function () {
     };
     ShelfController.prototype.delete = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, gameList;
+            var id, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = request.params.id;
-                        return [4 /*yield*/, Shelf_1.default.findOne({
-                                _id: request.user.id,
-                            })];
+                        _a.label = 1;
                     case 1:
-                        gameList = _a.sent();
-                        gameList.games = gameList.games.filter(function (game) { return game.id != id; });
-                        return [4 /*yield*/, gameList.save()];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, shelfRepository.delete({ id: id, _id: request.user.id })];
                     case 2:
                         _a.sent();
                         response.json({
                             message: 'Jogo removido com sucesso',
                         });
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        return [2 /*return*/, response.status(400).json({
+                                error: error_2.message,
+                            })];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

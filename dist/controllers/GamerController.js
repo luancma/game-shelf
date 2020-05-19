@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var GamesRepository_1 = __importDefault(require("../repositories/GamesRepository"));
+var GamesRepository_1 = __importDefault(require("@modules/games/repositories/GamesRepository"));
 var GamerController = /** @class */ (function () {
     function GamerController() {
     }

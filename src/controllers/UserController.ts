@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import UsersRepository from '../repositories/UsersRepository';
-import CreateUserService from '../services/CreateUserService';
-import Shelf from '../models/Shelf';
+import UsersRepository from '@modules/users/infra/mongoose/repositories/UsersRepository';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import ShelvesRepository from '@modules/shelves/infra/mongoose/ShelvesRepository';
+import { responseCreateUserDTO } from '@modules/users/interfaces/UserDTO';
 
 const userRepository = new UsersRepository();
+const shelfRepository = new ShelvesRepository();
 
 class UserController {
   async store(request: Request, response: Response): Promise<Response> {
@@ -19,7 +21,7 @@ class UserController {
         password,
       });
 
-      await Shelf.create({
+      await shelfRepository.createShelf({
         _id,
       });
 
@@ -46,6 +48,17 @@ class UserController {
         name,
         email,
       });
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
+      });
+    }
+  }
+
+  async index(request: Request, response: Response): Promise<Response> {
+    try {
+      const users: responseCreateUserDTO[] = await userRepository.listUsers();
+      return response.json(users);
     } catch (error) {
       return response.status(400).json({
         error: error.message,
