@@ -1,4 +1,4 @@
-import Shelf from '@modules/shelves/infra/entities/Shelf';
+import Shelf from '@modules/shelves/infra/mongoose/entities/Shelf';
 import IShelvesRepository from '@modules/shelves/repositories/IShelvesRepository';
 import {
   ICreateShelf,

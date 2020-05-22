@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ShelvesRepository_1 = __importDefault(require("@modules/shelves/infra/mongoose/ShelvesRepository"));
+var ShelvesRepository_1 = __importDefault(require("@modules/shelves/infra/mongoose/repositories/ShelvesRepository"));
 var InsertGameToShelf_1 = __importDefault(require("@modules/shelves/services/InsertGameToShelf"));
 var shelfRepository = new ShelvesRepository_1.default();
 var ShelfController = /** @class */ (function () {

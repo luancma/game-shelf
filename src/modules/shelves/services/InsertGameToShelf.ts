@@ -1,13 +1,18 @@
-import ShelfRepository from '@modules/shelves/repositories/IShelvesRepository';
+import { injectable, inject } from 'tsyringe';
+import IShelfRepository from '@modules/shelves/repositories/IShelvesRepository';
 import {
   ICreateShelf,
   IUpdateGameShelfDTO,
 } from '@modules/shelves/interfaces/ShelfDTO';
 
+@injectable()
 class UpdateGameShelf {
-  private shelfRepository: ShelfRepository;
+  private shelfRepository: IShelfRepository;
 
-  constructor(shelfRepository: ShelfRepository) {
+  constructor(
+    @inject('ShelfRepository')
+    shelfRepository: IShelfRepository
+  ) {
     this.shelfRepository = shelfRepository;
   }
 

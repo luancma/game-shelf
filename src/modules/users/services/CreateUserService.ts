@@ -1,15 +1,20 @@
+import { injectable, inject } from 'tsyringe';
+import { hash } from 'bcryptjs';
+
 import IUsersRepository from '../repositories/IUsersRepository';
 import {
   requestCreateUserDTO,
   responseCreateUserDTO,
 } from '../interfaces/UserDTO';
 
-import { hash } from 'bcryptjs';
-
+@injectable()
 export default class CreateUserService {
   private usersRepository: IUsersRepository;
 
-  constructor(usersRepository: IUsersRepository) {
+  constructor(
+    @inject('UsersRepository')
+    usersRepository: IUsersRepository
+  ) {
     this.usersRepository = usersRepository;
   }
 

@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import GamesRepository from "@modules/games/repositories/GamesRepository";
+import { Request, Response } from 'express';
+import GamesRepository from '@modules/games/repositories/GamesRepository';
 
 class GamerController {
   async index(request: Request, response: Response) {
@@ -7,9 +7,14 @@ class GamerController {
 
     const gamesRepository = new GamesRepository();
 
-    const gameList = await gamesRepository.list({ name, page });
-
-    return response.json(gameList);
+    try {
+      const gameList = await gamesRepository.list({ name, page });
+      response.json({ games: gameList[0].result });
+    } catch (error) {
+      return response.status(400).json({
+        error: error.message,
+      });
+    }
   }
 }
 
